@@ -73,6 +73,7 @@ export class ResizeObserver extends React.Component {
       state: { elemsToRefs }
     } = this;
     return <ResizeContext.Provider {...{
+      debug,
       value: {
         register,
         unregister
@@ -161,16 +162,21 @@ export const Size = ({ ...etc }) => <ResizeContext.Consumer>
   }}/>}
 </ResizeContext.Consumer>
 
+class SizeManager extends React.PureComponent {
+  constructor(props) {
+    super(props);
+    this.state = {
+      ObserverEntry: {}
+    };
 
-const SizeManager = ({ ResizeContext }) => {
-  const [ ObserverEntry, setObserverEntry ] = React.useState(
-    { contentRect: {} },
-  );
+    this.myRef = React.createRef();
+  }
 
-  const myRef = React.createRef();
+  componentDidMount() {
+    const { register, unregister } =
+      this.props.ResizeContext;
 
-  React.useEffect(() => {
-    ResizeContent.register(
+    register(
       this.myRef,
       ObserverEntry => {
         const { bottom, height, left, right, top, width, x, y }
@@ -181,15 +187,32 @@ const SizeManager = ({ ResizeContext }) => {
             v => v === 0
         )) return;
 
-        setObserverEntry(ObserverEntry);
+        this.setState({
+          ObserverEntry
+        })
       }
     );
+  }
 
-    return () => ResizeContext.unregister(myRef);
-  });
+  componentWillUnmount() {
+    const { register, unregister } =
+      this.props.ResizeContext;
 
-  return React.cloneElement(
-    React.children.only(render(ObserverEntry.contentRect)),
-    { ref: this.myRef }
-  )
+    unregister(this.myRef);
+  }
+
+  render() {
+    const {
+      myRef,
+      state: {
+        ObserverEntry: { contentRect = {} },
+      },
+      props: { render },
+    } = this;
+
+    return React.cloneElement(
+        React.Children.only(render(contentRect)),
+        { ref: myRef },
+    );
+  }
 }
