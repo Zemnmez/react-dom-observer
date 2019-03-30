@@ -1,22 +1,9 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
+import {
+  ResizeObserver as _ResizeObserver,
+  Size as _Size,
+  TrackedElemsContext as _TrackedElemsContext,
+} from './ResizeObserver';
 
-import styles from './styles.css'
-
-export default class ExampleComponent extends Component {
-  static propTypes = {
-    text: PropTypes.string
-  }
-
-  render() {
-    const {
-      text
-    } = this.props
-
-    return (
-      <div className={styles.test}>
-        Example Component: {text}
-      </div>
-    )
-  }
-}
+export const ResizeObserver = _ResizeObserver;
+export const Size = _Size;
+export const TrackedElemsContext = _TrackedElemsContext;
