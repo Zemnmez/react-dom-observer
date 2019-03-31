@@ -1,115 +1,56 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import propTypes from 'prop-types';
 import resizeObserver from 'resize-observer-polyfill';
+import childRefManager from './ChildRefManager';
 import { Set, Map } from 'immutable';
 
-import styles from './styles.css'
 
 const hurl = (error) => { throw new Error(error) }
 
 
-export const ResizeContext = React.createContext({
-  register: (ref, callback) => hurl('missing parent ResizeObserver'),
-  unregister: (ref) => hurl('missing parent ResizeObserver'),
-  debug: false
-});
+const refManager = new childRefManager();
+export const ResizeInternals = refManager.Internals;
+export const ResizeObserver = ({ children }) => <refManager.Provider>
+  <refManager.Internals {...{
+    render: ({ elemsToRefs, refsToElems, refsToCallbacks }) =>
+      <ResizeObserverManager {...{
+        elems: new Set(refsToElems.values()),
+        elemsToRefs,
+        refsToElems,
+        refsToCallbacks
+      }}/>
+  }}/>
 
-export const TrackedElemsContext = React.createContext({
-  elems: undefined
-});
+  {children}
 
-
-export class ResizeObserver extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      elemsToRefs: new Map(), /* elem -> ref */
-      refsToElems: new Map(),  /* ref -> elem */
-      refsToCallbacks: new Map() /* ref -> callback */
-    }
-
-    this.register = this.register.bind(this);
-    this.unregister = this.unregister.bind(this);
-    this.resized = this.resized.bind(this);
-  }
-
-  register(ref, callback) {
-    if (!ref.current) hurl('ref not yet mounted');
-
-    this.setState((state, props) => ({
-      elemsToRefs: state.elemsToRefs.set(ref.current, ref),
-      refsToElems: state.refsToElems.set(ref, ref.current),
-      refsToCallbacks: state.refsToCallbacks.set(ref, callback)
-    }));
-  }
-
-  unregister(ref) {
-    this.setState((state, props) => ({
-      elemsToRefs: state.elemsToRefs.delete(
-        state.refsToElems.get(ref)
-      ),
-
-      refsToElems: state.refsToElems.delete(ref),
-      refsToCallbacks: state.refsToCallbacks.delete(ref)
-    }));
-  }
-
-  resized(sizes) {
-    const { refsToCallbacks, elemsToRefs } = this.state;
-
-    [...sizes].forEach((ResizeEntry) =>
-      refsToCallbacks.get(elemsToRefs.get(ResizeEntry.target))
-        (ResizeEntry)
-    );
-  }
-
-  render() {
-    const {
-      register, unregister,
-      resized,
-
-      props: { children, debug },
-      state: { elemsToRefs }
-    } = this;
-    return <ResizeContext.Provider {...{
-      debug,
-      value: {
-        register,
-        unregister
-      }
-    }}>
-      <TrackedElemsContext.Provider {...{
-        value: {
-          elems: new Set(elemsToRefs.keys())
-        }
-      }}>
-
-        <TrackedElemsContext.Consumer>
-          {({ elems }) => <ResizeObserverManager {...{
-            debug,
-            elems,
-            callback: resized,
-          }}/>}
-        </TrackedElemsContext.Consumer>
-
-      {children}
-
-      </TrackedElemsContext.Provider>
-    </ResizeContext.Provider>
-  }
-}
+</refManager.Provider>
 
 //ResizeObserver manager is used to track adds /
 //removals of elements to track.
-export class ResizeObserverManager extends React.PureComponent {
+class ResizeObserverManager extends React.PureComponent {
+  static propTypes = {
+    elemsToRefs: propTypes.instanceOf(Map).isRequired,
+    refsToCallbacks: propTypes.instanceOf(Map).isRequired,
+    elems: propTypes.instanceOf(Set).isRequired
+  }
+
   componentDidMount() {
     this.observer = new resizeObserver(
-      this.props.callback
+      (...args) => this.resized(...args)
     );
 
     this.props.elems.forEach(elem =>
       this.observer.observe(elem)
+    );
+  }
+
+
+  resized(sizes) {
+    const { elemsToRefs, refsToCallbacks } = this.props;
+
+    [...sizes].forEach((ResizeEntry) =>
+      refsToCallbacks.get(elemsToRefs.get(ResizeEntry.target))
+        (ResizeEntry)
     );
   }
 
@@ -141,6 +82,8 @@ export class ResizeObserverManager extends React.PureComponent {
   }
 
   render() {
+
+    console.log({props: this.props});
     const { debug, elems } = this.props;
     if (!debug) return "";
 
@@ -155,64 +98,16 @@ export class ResizeObserverManager extends React.PureComponent {
   }
 }
 
-export const Size = ({ ...etc }) => <ResizeContext.Consumer>
-  {(ResizeContext) => <SizeManager {...{
-    ResizeContext,
-    ...etc
-  }}/>}
-</ResizeContext.Consumer>
-
-class SizeManager extends React.PureComponent {
-  constructor(props) {
-    super(props);
-    this.state = {
-      ObserverEntry: {}
-    };
-
-    this.myRef = React.createRef();
-  }
-
-  componentDidMount() {
-    const { register, unregister } =
-      this.props.ResizeContext;
-
-    register(
-      this.myRef,
-      ObserverEntry => {
-        const { bottom, height, left, right, top, width, x, y }
-          = ObserverEntry.contentRect;
-
-        // likely just been unmounted
-        if ([bottom, height, left, right, top, width, x, y].every(
-            v => v === 0
-        )) return;
-
-        this.setState({
-          ObserverEntry
-        })
-      }
-    );
-  }
-
-  componentWillUnmount() {
-    const { register, unregister } =
-      this.props.ResizeContext;
-
-    unregister(this.myRef);
+export class Size extends React.PureComponent {
+  static propTypes = {
+    render: propTypes.func.isRequired
   }
 
   render() {
-    const {
-      myRef,
-      state: {
-        ObserverEntry: { contentRect = {} },
-      },
-      props: { render },
-    } = this;
-
-    return React.cloneElement(
-        React.Children.only(render(contentRect)),
-        { ref: myRef },
-    );
+    const { render } = this.props;
+    return <refManager.Tracker {...{
+      render: (ResizeObserverEntry = { contentRect: {} }) =>
+          (console.log(ResizeObserverEntry),render(ResizeObserverEntry.contentRect))
+    }}/>
   }
 }
