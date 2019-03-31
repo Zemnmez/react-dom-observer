@@ -56,8 +56,7 @@ export class IntersectionObserver extends React.PureComponent {
 
 const refManager = new childRefManager();
 export const IntersectionInternals = refManager.Internals;
-const IntersectionObserverProvider = ({ refManager, target, children, rootMargin, thresholds }) => {
-  const myRef = React.createRef();
+const IntersectionObserverProvider = ({ refManager, target = React.createRef(), children, rootMargin, thresholds }) => {
 
   return <refManager.Provider>
     <refManager.Internals {...{
@@ -65,7 +64,7 @@ const IntersectionObserverProvider = ({ refManager, target, children, rootMargin
         <IntersectionObserverManager {...{
           children: new Set(refsToElems.values()),
           thresholds,
-          parent: myRef,
+          parent: target,
           elemsToRefs,
           refsToElems,
           rootMargin,
@@ -73,10 +72,12 @@ const IntersectionObserverProvider = ({ refManager, target, children, rootMargin
         }}/>
     }}/>
 
-    {React.cloneElement(
-      React.Children.only(children),
-      { ref: myRef },
-    )}
+    {target instanceof Window?
+      children:
+      React.cloneElement(
+        React.Children.only(children),
+        { ref: target },
+      )}
 
   </refManager.Provider>
 

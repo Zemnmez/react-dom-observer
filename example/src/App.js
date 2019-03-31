@@ -45,6 +45,23 @@ export default class App extends React.PureComponent {
               }}/>)}
           </div>
         }}/>
+
+
+        <IntersectionObserver {...{
+          thresholds: [0, .25, .5, .75, 1],
+          target: window,
+          render: ({ Internals, Intersection }) => <Intersection {...{
+            render: ({ intersectionRatio }) => <div {...{
+              style: {
+                height: "8em",
+                position: "relative"
+              }
+            }}>
+              hello! I am {intersectionRatio * 100}% visible to the main window.
+            </div>
+          }}/>
+        }}/>
+
         <h2 id="resize_observer">ResizeObserver</h2>
         <p> The ResizeObserver shares a polyfilled
         ResizeObserver between children.</p>
