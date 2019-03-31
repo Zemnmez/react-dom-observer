@@ -2,12 +2,14 @@
 # react-dom-observer
 This package exposes interfaces for reacting to changes in Observer APIs, for example reacting to resizing.
 
+To see a demo, check the [github pages site](//zemnmez.github.io/react-dom-observer).
+
 [![NPM](https://img.shields.io/npm/v/react-dom-observer.svg)](https://www.npmjs.com/package/react-dom-observer) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
 ## Install
 
 ```bash
-yarn add  react-dom-observer
+yarn add react-dom-observer
 ```
 
 ## Usage
