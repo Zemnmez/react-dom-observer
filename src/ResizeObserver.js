@@ -3,14 +3,15 @@ import propTypes from 'prop-types';
 import resizeObserver from 'resize-observer-polyfill';
 import childRefManager from './ChildRefManager';
 import { Set, Map } from 'immutable';
+import { forwardRef, forwardRenderRef } from './ForwardRef';
 
 
 const hurl = (error) => { throw new Error(error) }
 
 
 const refManager = new childRefManager();
-export const ResizeInternals = refManager.Internals;
-export const ResizeObserver = ({ children }) => <refManager.Provider>
+export const ResizeInternals = forwardRenderRef(refManager.Internals);
+export const ResizeObserver = forwardRef(({ children, childRef }) => <refManager.Provider>
   <refManager.Internals {...{
     render: ({ elemsToRefs, refsToElems, refsToCallbacks }) =>
       <ResizeObserverManager {...{
@@ -23,7 +24,9 @@ export const ResizeObserver = ({ children }) => <refManager.Provider>
 
   {children}
 
-</refManager.Provider>
+</refManager.Provider>)
+
+
 
 //ResizeObserver manager is used to track adds /
 //removals of elements to track.
@@ -83,7 +86,6 @@ class ResizeObserverManager extends React.PureComponent {
 
   render() {
 
-    console.log({props: this.props});
     const { debug, elems } = this.props;
     if (!debug) return "";
 
@@ -98,7 +100,7 @@ class ResizeObserverManager extends React.PureComponent {
   }
 }
 
-export class Size extends React.PureComponent {
+export const Size = forwardRenderRef(class Size extends React.PureComponent {
   static propTypes = {
     render: propTypes.func.isRequired
   }
@@ -107,7 +109,7 @@ export class Size extends React.PureComponent {
     const { render } = this.props;
     return <refManager.Tracker {...{
       render: (ResizeObserverEntry = { contentRect: {} }) =>
-          (console.log(ResizeObserverEntry),render(ResizeObserverEntry.contentRect))
+          render(ResizeObserverEntry.contentRect)
     }}/>
   }
-}
+})

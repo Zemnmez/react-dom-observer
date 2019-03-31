@@ -2,11 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import childRefManager from './ChildRefManager';
 import * as _ from 'intersection-observer';
+import { forwardRef, forwardRenderRef } from './ForwardRef';
 import { Set, Map } from 'immutable';
 
 const hurl = (error) => { throw new Error(error) }
 
-export class IntersectionObserver extends React.PureComponent {
+export const IntersectionObserver = forwardRenderRef(class IntersectionObserver extends React.PureComponent {
   static propTypes = {
     render: PropTypes.func,
     thresholds: PropTypes.arrayOf(PropTypes.number),
@@ -52,11 +53,9 @@ export class IntersectionObserver extends React.PureComponent {
       {render({ Internals, Intersection })}
     </Provider>
   }
-}
+})
 
-const refManager = new childRefManager();
-export const IntersectionInternals = refManager.Internals;
-const IntersectionObserverProvider = ({ refManager, target = React.createRef(), children, rootMargin, thresholds }) => {
+const IntersectionObserverProvider = forwardRef(({ refManager, target = React.createRef(), children, rootMargin, thresholds }) => {
 
   return <refManager.Provider>
     <refManager.Internals {...{
@@ -82,9 +81,10 @@ const IntersectionObserverProvider = ({ refManager, target = React.createRef(), 
   </refManager.Provider>
 
 
-}
+});
 
-export class IntersectionObserverManager extends React.PureComponent {
+export const IntersectionObserverManager = forwardRef(
+class IntersectionObserverManager extends React.PureComponent {
   static propTypes = {
     elemsToRefs: PropTypes.instanceOf(Map).isRequired,
     refsToCallbacks: PropTypes.instanceOf(Map).isRequired,
@@ -162,9 +162,9 @@ export class IntersectionObserverManager extends React.PureComponent {
       }
     </React.Fragment>
   }
-}
+})
 
-class IntersectionObserverIntersection extends React.PureComponent {
+const IntersectionObserverIntersection = forwardRenderRef(class IntersectionObserverIntersection extends React.PureComponent {
   static propTypes = {
     render: PropTypes.func.isRequired,
     refManager: PropTypes.shape({
@@ -180,4 +180,4 @@ class IntersectionObserverIntersection extends React.PureComponent {
       children,
     }}/>
   }
-}
+})

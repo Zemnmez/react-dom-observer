@@ -62,6 +62,26 @@ export default class App extends React.PureComponent {
           }}/>
         }}/>
 
+        <h3 id="chaining">Chaining</h3>
+        <p> Components of this package can be 'chained', and any refs
+        will be forwarded automatically. This can be used, for example
+        to re-render an element (1) when resized and also (2) visible. </p>
+
+        <IntersectionObserver {...{
+          target: window,
+          thresholds: [0, 1],
+          render: ({ Intersection }) => <Intersection {...{
+            render: ({ isIntersecting }) => <ResizeObserver>
+              <Size {...{
+                render: ({ width = 0, height = 0 }) => <textarea {...{
+                  onChange: () => 1,
+                  value: `I only update when visible! ${width}x${height}`
+                }}/>
+              }}/>
+            </ResizeObserver>
+          }}/>
+        }}/>
+
         <h2 id="resize_observer">ResizeObserver</h2>
         <p> The ResizeObserver shares a polyfilled
         ResizeObserver between children.</p>
