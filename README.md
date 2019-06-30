@@ -1,117 +1,164 @@
-# WARNING API CURRENTLY UNSTABLE. PLEASE WAIT FOR A MORE STABLE RELEASE
-# react-dom-observer
-This package exposes interfaces for reacting to changes in Observer APIs, for example reacting to resizing.
+> **[react-observer-hook](README.md)**
 
-To see a demo, check the [github pages site](//zemnmez.github.io/react-dom-observer).
+[Globals]() / [react-observer-hook](README.md) /
 
-[![NPM](https://img.shields.io/npm/v/react-dom-observer.svg)](https://www.npmjs.com/package/react-dom-observer) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+**`requires`** prop-types
 
-## Install
+**`requires`** react
+
+**`requires`** react-dom
+
+**`summary`** Provides react hooks for the DOM observer APIs that facilitate detecting visibility and resizing of DOM elements.
+
+**`version`** 1.0.0
+
+**`author`** zemnmez
+
+**`copyright`** zemnmez 2019
+
+**`license`** MIT
+## Installation
 
 ```bash
-yarn add react-dom-observer
+yarn add react-observer-hook
 ```
 
-## Usage
-### IntersectionObserver
-The `IntersectionObserver` component leverages a polyfilled `IntersectionObserver`
-to track the visibility of elements relative to each other.
+## Example
 
-In the simplest case, an `IntersectionObserver` can be used to provide visibility
-information from a parent element to its children.
+**`example`** 
 
-In the following example, we create a short div where the child components are
-aware of if they're visible or not relative to the parent element's scroll
-space:
+```javascript
+import React from 'react'
+import { useStorage } from 'react-storage-hook'
 
-```jsx
-import { IntersectionObserver } from 'react-dom-observer';
+export const SavedTextarea = () => {
+  const [text, setText] = useStorage('saved-text', {
+    placeholder: ""
+  });
 
-export const Example1 = () => <IntersectionObserver {...{
-  thresholds: [0, .25, .5, .75, 1], // update each quarter of exposure
-  render: ({ Internals, Intersection }) => <div {...{
-    style: { height: "10em", position: "relative", overflowY: "auto" },
-  }}>
+  const onChange = e => setText(e.target.value);
 
-  {[...Array(20)].map((v, i) => <Intersection {...{
-    key: i,
-    render: ({ intersectionRatio }) => <div>
-      {i+1}. I am {intersectionRatio * 100}% visible!
-    </div>
-  }}/>)}
-}}/>
-```
-
-The `Intersection`, and `Internals` parameters are specific to each
-`IntersectionObserver`, which allows multiple `IntersectionObserver`s
-to track different aspects of different parents without running into each
-other.
-
-In this example, we produce the same scroll-aware set of children, but attempt to render them only when visible to the browser window:
-
-```jsx
-import { IntersectionObserver} from 'react-dom-observer';
-
-const ScrollTracker = ({ WindowIntersection }) => <IntersectionObserver {...{
-  thresholds: [0, .25, .5, .75, 1], // update each quarter of exposure
-
-  render: ({ Internals, Intersection }) => <div {...{
-    style: { height: "10em", position: "relative", overflowY: "auto" },
-  }}>
-
-  {[...Array(20)].map((v, i) => <Intersection {...{
-    key: i,
-    render: ({ intersectionRatio }) => <div>
-      {i+1}. I am {intersectionRatio * 100}% visible to my parent and
-    </div>
-  }}/>)}
-}}/>
-
-export const Example2 = () => <IntersectionObserver {...{
-  thresholds: [0, 1], // visible or invisible
-  target: window, // browser window
-
-  render: ({ Intersection: WindowIntersection }) => <div>
-    <WindowIntersection {...{
-        render: ({ isIntersecting }) =>
-          isIntersecting? <ScrollTracker {...{
-            WindowIntersection
-          }}/> || ""
-    }}/>
-
-  </div>
-}}/>
-```
-
-### ResizeObserver
-
-The `ResizeObserver` component leverages a polyfilled `ResizeObserver`
-to track the visibility of elements relative to each other.
-
-A `ResizeObserver` can be used to track the size of a container element so that
-React can calculate the necessary pixel-size of internal elements e.g. SVGs.
-
-In the following example, we create a resize-aware `<textarea>`:
-
-```jsx
-import { ResizeObserver, Size } from 'react-dom-observer';
-
-export const Example3 = () => <ResizeObserver>
-
-<Size {...{
-  render: ({width = undefined, height = undefined}) => <textarea {...{
-    value: `Resize me to see me change! ${[width, height].join("x")}`,
-    onChange: () => 1
+  return <textarea {...{
+    onChange,
+    value: text
   }}/>
-}}/>
-
-</ResizeObserver>
-
+}
 ```
 
+### Index
 
+#### Functions
 
+* [useIntersectionObserver](README.md#const-useintersectionobserver)
+* [useMutationObserver](README.md#const-usemutationobserver)
+* [useResizeObserver](README.md#const-useresizeobserver)
 
-## License
+## Functions
 
-MIT © [zemnmez](https://github.com/zemnmez)
+### `Const` useIntersectionObserver
+
+▸ **useIntersectionObserver**(`options?`: *`IntersectionObserverInit`*): *function*
+
+*Defined in [index.tsx:229](https://github.com/Zemnmez/react-dom-observer/blob/04c56ef/src/index.tsx#L229)*
+
+[useIntersectionObserver](README.md#const-useintersectionobserver) is a React hook exposing the functionality of the
+[IntersectionObserver][mdn: IntersectionObserver] API, which is an efficient way to
+tell when an element becomes visible within some viewport, which could be
+the parent window, or the containing element.
+
+This function returns a factory function, which when called returns two values in an array:
+
+1. An [IntersectionObserverEntry][mdn: IntersectionObserverEntry], or `undefined` representing
+details on how the children were modified.
+
+2. A [React ref][react docs: react ref] that you can pass in the `ref={}`
+parameter to any elements you want to track child changes for.
+
+This factory type construction allows you to pass your useIntersectionObserver value
+any number to children that you want to intersect with you.
+
+[mdn: IntersectionObserver]: https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver "MDN docs: IntersectionObserver"
+[mdn: IntersectionObserverEntry]: https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserverEntry "MDN docs: IntersectionObserverEntry"
+[react docs: react ref]: https://reactjs.org/docs/refs-and-the-dom.html "React Docs: Refs and the DOM"
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`options?` | `IntersectionObserverInit` |
+
+**Returns:** *function*
+
+▸ (`Default?`: *`EntryType`*, `options?`: *any*): *[`EntryType` | undefined, `callbackRef`]*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`Default?` | `EntryType` |
+`options?` | any |
+
+___
+
+### `Const` useMutationObserver
+
+▸ **useMutationObserver**(`Default?`: *`MutationRecord`*, `options?`: *`MutationObserverInit`*): *[`MutationRecord` | undefined, `callbackRef`]*
+
+*Defined in [index.tsx:199](https://github.com/Zemnmez/react-dom-observer/blob/04c56ef/src/index.tsx#L199)*
+
+[useMutationObserver](README.md#const-usemutationobserver) is a React hook exposing the functionality of the
+[MutationObserver][mdn: MutationObserver] API, which is an efficient way to
+tell when the children of an element changes.
+
+This function returns two values in an array:
+
+1. A [MutationRecord][mdn: MutationRecord], or `undefined` representing
+details on how the children were modified.
+
+2. A [React ref][react docs: react ref] that you can pass in the `ref={}`
+parameter to any elements you want to track child changes for.
+
+[mdn: MutationObserver]: https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver "MDN docs: MutationObserver"
+[mdn: MutationRecord]: https://developer.mozilla.org/en-US/docs/Web/API/MutationRecord "MDN docs: MutationRecord"
+[react docs: react ref]: https://reactjs.org/docs/refs-and-the-dom.html "React Docs: Refs and the DOM"
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`Default?` | `MutationRecord` |
+`options?` | `MutationObserverInit` |
+
+**Returns:** *[`MutationRecord` | undefined, `callbackRef`]*
+
+___
+
+### `Const` useResizeObserver
+
+▸ **useResizeObserver**(`Default?`: *`ResizeObserverEntry`*): *[`ResizeObserverEntry` | undefined, `callbackRef`]*
+
+*Defined in [index.tsx:178](https://github.com/Zemnmez/react-dom-observer/blob/04c56ef/src/index.tsx#L178)*
+
+[useResizeObserver](README.md#const-useresizeobserver) is a React hook exposing the functionality of
+the [ResizeObserver][mdn: ResizeObserver] API, which is an efficient
+way to tell when an element changes size.
+
+The function returns two values in an array.
+
+1. a [ResizeObserverEntry][mdn: ResizeObserverEntry] or `undefined`,
+representing the current known size.
+
+2.a React ref you can pass in the `ref={}` parameter to any
+elements you want to track the size of.
+
+[mdn: ResizeObserver]: https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserver
+[mdn: ResizeObserverEntry]: https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserverEntry
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`Default?` | `ResizeObserverEntry` |
+
+**Returns:** *[`ResizeObserverEntry` | undefined, `callbackRef`]*
+o

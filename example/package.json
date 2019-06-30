@@ -1,17 +1,15 @@
 {
-  "name": "react-dom-observer-example",
-  "homepage": "https://zemnmez.github.io/react-dom-observer",
+  "name": "react-observer-hook-example",
+  "homepage": "https://zemnmez.github.io/react-observer-hook",
   "version": "0.0.0",
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "immutable": "^4.0.0-rc.12",
     "prop-types": "^15.6.2",
-    "react": "^16.4.1",
-    "react-dom": "^16.4.1",
-    "react-dom-observer": "link:..",
+    "react": "link:../node_modules/react",
+    "react-dom": "link:../node_modules/react-dom",
     "react-scripts": "^1.1.4",
-    "resize-observer-polyfill": "^1.5.1"
+    "react-storage-hook": "link:.."
   },
   "scripts": {
     "start": "react-scripts start",
