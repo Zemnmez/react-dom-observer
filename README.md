@@ -22,30 +22,30 @@
 ```bash
 yarn add react-observer-hook
 ```
+# Abstract
+This package provides type checked react hooks for the observer APIs which are efficient, browser supported ways
+of querying changes to an element's size, position, visibility and changes over time. It should be easy to
+use this package to react to these changes without complicated state management or performance downsides.
 
-## Example
+The types used to typecheck this package are imported from the mainline typescript DefinitelyTyped libraries.
+If these APIs change in a way that no longer conforms to these definitions, the package should stop building
+rather than create subtle run time errors.
 
-**`example`** 
+| export | purpose | API  |
+|--------|---------|------|
+| [useIntersectionObserver](README.md#const-useintersectionobserver) | Detect when an element becomes all or partially visible or invisible and is scrolled into view | [IntersectionObserver][mdn: IntersectionObserver] |
+| [useResizeObserver](README.md#const-useresizeobserver) | Detect when an element changes size (due to CSS or otherwise) | [ResizeObserver][mdn: ResizeObserver] |
+| [useMutationObserver](README.md#const-usemutationobserver) | Detect when the children of an element are modified | [MutationObserver][mdn: MutationObserver] |
 
-```javascript
-import React from 'react'
-import { useStorage } from 'react-storage-hook'
-
-export const SavedTextarea = () => {
-  const [text, setText] = useStorage('saved-text', {
-    placeholder: ""
-  });
-
-  const onChange = e => setText(e.target.value);
-
-  return <textarea {...{
-    onChange,
-    value: text
-  }}/>
-}
-```
+[mdn: IntersectionObserver]: https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API "Mozilla Developer Network: IntersectionObserver"
+[mdn: MutationObserver]: https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver "Mozilla Developer Network: MutationObserver"
+[mdn: ResizeObserver]: https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserver "Mozilla Developer Network: ResizeObserver"
 
 ### Index
+
+#### Type aliases
+
+* [IntersectionObserverOptions](README.md#intersectionobserveroptions)
 
 #### Functions
 
@@ -53,13 +53,23 @@ export const SavedTextarea = () => {
 * [useMutationObserver](README.md#const-usemutationobserver)
 * [useResizeObserver](README.md#const-useresizeobserver)
 
+## Type aliases
+
+###  IntersectionObserverOptions
+
+Ƭ **IntersectionObserverOptions**: *object*
+
+*Defined in [index.tsx:233](https://github.com/Zemnmez/react-dom-observer/blob/8f0bb53/src/index.tsx#L233)*
+
+#### Type declaration:
+
 ## Functions
 
 ### `Const` useIntersectionObserver
 
-▸ **useIntersectionObserver**(`options?`: *`IntersectionObserverInit`*): *function*
+▸ **useIntersectionObserver**(`options?`: *[IntersectionObserverOptions](README.md#intersectionobserveroptions)*): *function*
 
-*Defined in [index.tsx:288](https://github.com/Zemnmez/react-dom-observer/blob/c9898d4/src/index.tsx#L288)*
+*Defined in [index.tsx:292](https://github.com/Zemnmez/react-dom-observer/blob/8f0bb53/src/index.tsx#L292)*
 
 [useIntersectionObserver](README.md#const-useintersectionobserver) is a React hook exposing the functionality of the
 [IntersectionObserver][mdn: IntersectionObserver] API, which is an efficient way to
@@ -119,7 +129,7 @@ export default () => {
 
 Name | Type |
 ------ | ------ |
-`options?` | `IntersectionObserverInit` |
+`options?` | [IntersectionObserverOptions](README.md#intersectionobserveroptions) |
 
 **Returns:** *function*
 
@@ -138,7 +148,7 @@ ___
 
 ▸ **useMutationObserver**(`Default?`: *`MutationRecord`*, `options?`: *`MutationObserverInit`*): *[`MutationRecord` | undefined, `callbackRef`]*
 
-*Defined in [index.tsx:224](https://github.com/Zemnmez/react-dom-observer/blob/c9898d4/src/index.tsx#L224)*
+*Defined in [index.tsx:224](https://github.com/Zemnmez/react-dom-observer/blob/8f0bb53/src/index.tsx#L224)*
 
 [useMutationObserver](README.md#const-usemutationobserver) is a React hook exposing the functionality of the
 [MutationObserver][mdn: MutationObserver] API, which is an efficient way to
@@ -199,7 +209,7 @@ ___
 
 ▸ **useResizeObserver**(`Default?`: *`ResizeObserverEntry`*): *[`ResizeObserverEntry` | undefined, `callbackRef`]*
 
-*Defined in [index.tsx:175](https://github.com/Zemnmez/react-dom-observer/blob/c9898d4/src/index.tsx#L175)*
+*Defined in [index.tsx:175](https://github.com/Zemnmez/react-dom-observer/blob/8f0bb53/src/index.tsx#L175)*
 
 [useResizeObserver](README.md#const-useresizeobserver) is a React hook exposing the functionality of
 the [ResizeObserver][mdn: ResizeObserver] API, which is an efficient

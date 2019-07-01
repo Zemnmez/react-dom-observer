@@ -230,6 +230,17 @@ export const useMutationObserver = (
   options?: MutationObserverInit
 ): [MutationRecord | undefined, callbackRef] => useObserver(MutationObserver)(Default, options)
 
+type SameAs<T1,T2> = T2 extends T1? T1: never
+
+/**
+  *  @see https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/IntersectionObserver#Parameters
+  */
+export type IntersectionObserverOptions = SameAs<{
+    root?: Element | null;
+    rootMargin?: string;
+    threshold?: number | number[];
+}, IntersectionObserverInit>
+
 /**
   * [[useIntersectionObserver]] is a React hook exposing the functionality of the
   * [IntersectionObserver][mdn: IntersectionObserver] API, which is an efficient way to
@@ -291,6 +302,5 @@ export const useIntersectionObserver = (
     * for the [[IntersectionObserver]]. The important ones are `root`, specifying the root element, and `threshold`, specifying the
     * different amounts of intersection which should generate an event.
     */
-  options?: IntersectionObserverInit
+  options?: IntersectionObserverOptions
 ) => useObserver(IntersectionObserver, options)
-

@@ -14,11 +14,5 @@ def jsdoc: "/**\n" + (. | split("\n") | map(" * " + .) | join("\n")) + "\n */";
 yarn add \(.name)
 ```
 \(.documentation)
-## Example
-@example
-
-```javascript
-\(.example)
-```
 
 " | ltrimstr("\n") | rtrimstr("\n") | jsdoc) + "\n\n" + (" " |jsdoc) + "\n\n"
