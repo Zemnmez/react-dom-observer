@@ -194,6 +194,32 @@ export const useResizeObserver = (
   * [mdn: MutationRecord]: https://developer.mozilla.org/en-US/docs/Web/API/MutationRecord "MDN docs: MutationRecord"
   * [react docs: react ref]: https://reactjs.org/docs/refs-and-the-dom.html "React Docs: Refs and the DOM"
   * @example [useMutationObserver](example/src/useMutationObserver.js)
+  * 
+  * ```javascript
+  * import React from 'react'
+  * import { useMutationObserver } from 'react-observer-hook'
+  * 
+  * export default () => {
+  *   const [mutation, ref] = useMutationObserver()
+  *   const childRef = React.useRef()
+  *   const [text, setText] = React.useState("example")
+  *   React.useEffect(() => {
+  *     window.setTimeout(() => setText("text2"), 1000)
+  *   }, [])
+  * 
+  *   return <div>
+  * 
+  *   <div ref={ref}>
+  *     <div ref={childRef}>{text}</div>
+  *   </div>
+  * 
+  *     changes to the DOM:
+  *     {JSON.stringify(mutation)}
+  * 
+  *   </div>
+  * }
+  * 
+  * ```
   */
 export const useMutationObserver = (
   Default?: MutationRecord,
@@ -225,6 +251,38 @@ export const useMutationObserver = (
   * [mdn: IntersectionObserverEntry]: https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserverEntry "MDN docs: IntersectionObserverEntry"
   * [react docs: react ref]: https://reactjs.org/docs/refs-and-the-dom.html "React Docs: Refs and the DOM"
   * @example [useIntersectionObserver](example/src/useIntersectionObserver.js)
+  * 
+  * ```javascript
+  * import React from 'react'
+  * import { useIntersectionObserver } from 'react-observer-hook'
+  * 
+  * export default () => {
+  *   const [{
+  *     bindingClientRect: { width, height },
+  *     intersectionRatio,
+  *     intersectionRect,
+  *     isIntersecting,
+  *     rootBounds,
+  *     target,
+  *     time
+  *   }, ref] = useResizeObserver()
+  * 
+  *   return <React.Fragment>
+  *     <textarea ref={ref}>
+  *       Resize me!!
+  *   </textarea>
+  *   <table> <thead><tr><td>param,</td><td>value</td></tr></thead>
+  *   <tbody>
+  *       {Object.entries({
+  *         width, height, intersectionRatio, intersectionRect,
+  *         isIntersecting, rootBounds, target, time
+  *       }).map(([k,v]) => <tr><td>{k}</td><td>{v}</td></tr>)}
+  *   </tbody></table>
+  *   </React.Fragment>
+  * 
+  * }
+  * 
+  * ```
   */
 export const useIntersectionObserver = (
   /**
@@ -234,3 +292,8 @@ export const useIntersectionObserver = (
     */
   options?: IntersectionObserverInit
 ) => useObserver(IntersectionObserver, options)
+
+
+
+
+

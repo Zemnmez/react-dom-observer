@@ -1,9 +1,8 @@
 
 
 
-src/%.tsx: misc/inject_examples.js
-	node $^ $@ > $@.tmp
-	mv $@.tmp $@
+src: misc/inject_examples.js
+	find "$@" -name "*.tsx" | xargs -t -I {} bash -c 'node $^ {} > {}.tmp && cat {}.tmp && mv {}.tmp {}'
 
 
 dist: src $(wildcard src/*) tsconfig.json
@@ -18,7 +17,7 @@ example/build: dist example/src $(wildcard example/src/*)
 	cd example && yarn run build
 
 .INTERMEDIATE: docs
-docs: src/doc.tsx $(wildcard src/*.ts*) $(wildcard node_modules/typedoc*)
+docs: src/doc.tsx $(wildcard src/*.ts*) $(wildcard node_modules/typedoc*) | src
 	- rm README.md # for some reason it ignores --entrypoint if there's an existing readme...
 	yarn run typedoc --entryPoint "$$(jq -r '.name' package.json)" --theme markdown --out docs/
 	cp -r docs/* .
@@ -31,7 +30,7 @@ README.md: docs
 	sed -E -i .backup '1s/^> *#(.*)/\1/' README.md
 	rm $@.backup
 
-src/doc.tsx: templates/pkgdoc_templ.jq pkginfo.json
+src/doc.tsx: templates/pkgdoc_templ.jq pkginfo.json | src
 	jq -r -f $^ > $@
 
 .INTERMEDIATE: pkginfo.json

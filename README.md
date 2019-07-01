@@ -59,7 +59,7 @@ export const SavedTextarea = () => {
 
 ▸ **useIntersectionObserver**(`options?`: *`IntersectionObserverInit`*): *function*
 
-*Defined in [index.tsx:229](https://github.com/Zemnmez/react-dom-observer/blob/04c56ef/src/index.tsx#L229)*
+*Defined in [index.tsx:287](https://github.com/Zemnmez/react-dom-observer/blob/bc32d59/src/index.tsx#L287)*
 
 [useIntersectionObserver](README.md#const-useintersectionobserver) is a React hook exposing the functionality of the
 [IntersectionObserver][mdn: IntersectionObserver] API, which is an efficient way to
@@ -104,7 +104,7 @@ ___
 
 ▸ **useMutationObserver**(`Default?`: *`MutationRecord`*, `options?`: *`MutationObserverInit`*): *[`MutationRecord` | undefined, `callbackRef`]*
 
-*Defined in [index.tsx:199](https://github.com/Zemnmez/react-dom-observer/blob/04c56ef/src/index.tsx#L199)*
+*Defined in [index.tsx:224](https://github.com/Zemnmez/react-dom-observer/blob/bc32d59/src/index.tsx#L224)*
 
 [useMutationObserver](README.md#const-usemutationobserver) is a React hook exposing the functionality of the
 [MutationObserver][mdn: MutationObserver] API, which is an efficient way to
@@ -137,7 +137,7 @@ ___
 
 ▸ **useResizeObserver**(`Default?`: *`ResizeObserverEntry`*): *[`ResizeObserverEntry` | undefined, `callbackRef`]*
 
-*Defined in [index.tsx:178](https://github.com/Zemnmez/react-dom-observer/blob/04c56ef/src/index.tsx#L178)*
+*Defined in [index.tsx:176](https://github.com/Zemnmez/react-dom-observer/blob/bc32d59/src/index.tsx#L176)*
 
 [useResizeObserver](README.md#const-useresizeobserver) is a React hook exposing the functionality of
 the [ResizeObserver][mdn: ResizeObserver] API, which is an efficient
@@ -161,4 +161,3 @@ Name | Type |
 `Default?` | `ResizeObserverEntry` |
 
 **Returns:** *[`ResizeObserverEntry` | undefined, `callbackRef`]*
-o
