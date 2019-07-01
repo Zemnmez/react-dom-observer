@@ -1,5 +1,5 @@
 # Abstract
-This package provides type checked react hooks for the observer APIs which are efficient, browser supported ways
+This package provides type checked React hooks for the observer APIs. The Observer APIs are efficient, browser supported ways
 of querying changes to an element's size, position, visibility and changes over time. It should be easy to
 use this package to react to these changes without complicated state management or performance downsides.
 

@@ -2,7 +2,7 @@
 
 
 src: misc/inject_examples.js $(wildcard example/src/*) | example/src
-	find "$@" -name "*.tsx" | xargs -t -I {} bash -c 'node $< {} > {}.tmp && [! cmp --silent {}.tmp {} ] && mv {}.tmp {}'
+	find "$@" -name "*.tsx" | xargs -t -I {} bash -c 'node $< {} > {}.tmp && cmp --silent {}.tmp {} || mv {}.tmp {}'
 
 
 dist: src $(wildcard src/*) tsconfig.json

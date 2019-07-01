@@ -2,6 +2,7 @@ import React from 'react'
 import { useIntersectionObserver } from 'react-observer-hook'
 
 export default () => {
+  const [/* rootRef */, useIntersectionChild] = useIntersectionObserver()
   const [{
     bindingClientRect: { width, height },
     intersectionRatio,
@@ -10,12 +11,9 @@ export default () => {
     rootBounds,
     target,
     time
-  }, ref] = useResizeObserver()
+  }, ref] = useIntersectionChild()
 
   return <React.Fragment>
-    <textarea ref={ref}>
-      Resize me!!
-  </textarea>
   <table> <thead><tr><td>param,</td><td>value</td></tr></thead>
   <tbody>
       {Object.entries({
