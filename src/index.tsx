@@ -122,11 +122,14 @@ export const useObserver =
   //
   // otherwise, we'd annoyingly have to keep tabs
   // on when elements go in and out of existence.
-  const elementToCallback = React.useMemo(() => new WeakMap(), []);
+    const elementToCallback:
+    WeakMap<Node, (setState: EntriesType[0]|undefined) => void> =
+      React.useMemo(() => new WeakMap(), []);
 
   const callback = React.useCallback((entries: EntriesType) =>
 	entries.forEach((entry: EntriesType[0]) =>
-		elementToCallback.get(entry.target)(entry)
+		 (elementToCallback.get(entry.target)
+		   || (()=>{}))(entry)
 	)
   , []);
 
@@ -168,12 +171,7 @@ export const useObserver =
  * [mdn: ResizeObserver]: https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserver
  * [mdn: ResizeObserverEntry]: https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserverEntry
  *
- * @example
- * ```javascript
- * const ruler = () => {
- *   const [{ width, height }, addRef] = useResizeObserver()
- *   return <div ref={addRef()}> width: {width}, height: {height}</div>
- * ```
+ * @example [useResizeObserver](example/src/useResizeObserver.js)
  */
 export const useResizeObserver = (
   Default?: ResizeObserverEntry
@@ -195,6 +193,7 @@ export const useResizeObserver = (
   * [mdn: MutationObserver]: https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver "MDN docs: MutationObserver"
   * [mdn: MutationRecord]: https://developer.mozilla.org/en-US/docs/Web/API/MutationRecord "MDN docs: MutationRecord"
   * [react docs: react ref]: https://reactjs.org/docs/refs-and-the-dom.html "React Docs: Refs and the DOM"
+  * @example [useMutationObserver](example/src/useMutationObserver.js)
   */
 export const useMutationObserver = (
   Default?: MutationRecord,
@@ -225,6 +224,7 @@ export const useMutationObserver = (
   * [mdn: IntersectionObserver]: https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver "MDN docs: IntersectionObserver"
   * [mdn: IntersectionObserverEntry]: https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserverEntry "MDN docs: IntersectionObserverEntry"
   * [react docs: react ref]: https://reactjs.org/docs/refs-and-the-dom.html "React Docs: Refs and the DOM"
+  * @example [useIntersectionObserver](example/src/useIntersectionObserver.js)
   */
 export const useIntersectionObserver = (
   /**
