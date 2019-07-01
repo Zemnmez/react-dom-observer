@@ -168,10 +168,9 @@ export const useObserver =
  * 2.a React ref you can pass in the `ref={}` parameter to any
  * elements you want to track the size of.
  *
- * [mdn: ResizeObserver]: https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserver
- * [mdn: ResizeObserverEntry]: https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserverEntry
  *
  * @example [useResizeObserver](example/src/useResizeObserver.js)
+ *
  */
 export const useResizeObserver = (
   Default?: ResizeObserverEntry
@@ -193,12 +192,13 @@ export const useResizeObserver = (
   * [mdn: MutationObserver]: https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver "MDN docs: MutationObserver"
   * [mdn: MutationRecord]: https://developer.mozilla.org/en-US/docs/Web/API/MutationRecord "MDN docs: MutationRecord"
   * [react docs: react ref]: https://reactjs.org/docs/refs-and-the-dom.html "React Docs: Refs and the DOM"
+  *
   * @example [useMutationObserver](example/src/useMutationObserver.js)
-  * 
+  *
   * ```javascript
   * import React from 'react'
   * import { useMutationObserver } from 'react-observer-hook'
-  * 
+  *
   * export default () => {
   *   const [mutation, ref] = useMutationObserver()
   *   const childRef = React.useRef()
@@ -206,19 +206,19 @@ export const useResizeObserver = (
   *   React.useEffect(() => {
   *     window.setTimeout(() => setText("text2"), 1000)
   *   }, [])
-  * 
+  *
   *   return <div>
-  * 
+  *
   *   <div ref={ref}>
   *     <div ref={childRef}>{text}</div>
   *   </div>
-  * 
+  *
   *     changes to the DOM:
   *     {JSON.stringify(mutation)}
-  * 
+  *
   *   </div>
   * }
-  * 
+  *
   * ```
   */
 export const useMutationObserver = (
@@ -250,12 +250,13 @@ export const useMutationObserver = (
   * [mdn: IntersectionObserver]: https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver "MDN docs: IntersectionObserver"
   * [mdn: IntersectionObserverEntry]: https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserverEntry "MDN docs: IntersectionObserverEntry"
   * [react docs: react ref]: https://reactjs.org/docs/refs-and-the-dom.html "React Docs: Refs and the DOM"
+  *
   * @example [useIntersectionObserver](example/src/useIntersectionObserver.js)
-  * 
+  *
   * ```javascript
   * import React from 'react'
   * import { useIntersectionObserver } from 'react-observer-hook'
-  * 
+  *
   * export default () => {
   *   const [{
   *     bindingClientRect: { width, height },
@@ -266,7 +267,7 @@ export const useMutationObserver = (
   *     target,
   *     time
   *   }, ref] = useResizeObserver()
-  * 
+  *
   *   return <React.Fragment>
   *     <textarea ref={ref}>
   *       Resize me!!
@@ -279,9 +280,9 @@ export const useMutationObserver = (
   *       }).map(([k,v]) => <tr><td>{k}</td><td>{v}</td></tr>)}
   *   </tbody></table>
   *   </React.Fragment>
-  * 
+  *
   * }
-  * 
+  *
   * ```
   */
 export const useIntersectionObserver = (
@@ -292,8 +293,3 @@ export const useIntersectionObserver = (
     */
   options?: IntersectionObserverInit
 ) => useObserver(IntersectionObserver, options)
-
-
-
-
-

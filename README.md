@@ -59,7 +59,7 @@ export const SavedTextarea = () => {
 
 ▸ **useIntersectionObserver**(`options?`: *`IntersectionObserverInit`*): *function*
 
-*Defined in [index.tsx:287](https://github.com/Zemnmez/react-dom-observer/blob/bc32d59/src/index.tsx#L287)*
+*Defined in [index.tsx:289](https://github.com/Zemnmez/react-dom-observer/blob/0f73a11/src/index.tsx#L289)*
 
 [useIntersectionObserver](README.md#const-useintersectionobserver) is a React hook exposing the functionality of the
 [IntersectionObserver][mdn: IntersectionObserver] API, which is an efficient way to
@@ -104,7 +104,7 @@ ___
 
 ▸ **useMutationObserver**(`Default?`: *`MutationRecord`*, `options?`: *`MutationObserverInit`*): *[`MutationRecord` | undefined, `callbackRef`]*
 
-*Defined in [index.tsx:224](https://github.com/Zemnmez/react-dom-observer/blob/bc32d59/src/index.tsx#L224)*
+*Defined in [index.tsx:225](https://github.com/Zemnmez/react-dom-observer/blob/0f73a11/src/index.tsx#L225)*
 
 [useMutationObserver](README.md#const-usemutationobserver) is a React hook exposing the functionality of the
 [MutationObserver][mdn: MutationObserver] API, which is an efficient way to
@@ -137,7 +137,7 @@ ___
 
 ▸ **useResizeObserver**(`Default?`: *`ResizeObserverEntry`*): *[`ResizeObserverEntry` | undefined, `callbackRef`]*
 
-*Defined in [index.tsx:176](https://github.com/Zemnmez/react-dom-observer/blob/bc32d59/src/index.tsx#L176)*
+*Defined in [index.tsx:175](https://github.com/Zemnmez/react-dom-observer/blob/0f73a11/src/index.tsx#L175)*
 
 [useResizeObserver](README.md#const-useresizeobserver) is a React hook exposing the functionality of
 the [ResizeObserver][mdn: ResizeObserver] API, which is an efficient
@@ -150,9 +150,6 @@ representing the current known size.
 
 2.a React ref you can pass in the `ref={}` parameter to any
 elements you want to track the size of.
-
-[mdn: ResizeObserver]: https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserver
-[mdn: ResizeObserverEntry]: https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserverEntry
 
 **Parameters:**
 
