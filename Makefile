@@ -1,3 +1,11 @@
+
+
+
+src/%.tsx: misc/inject_examples.js
+	node $^ $@ > $@.tmp
+	mv $@.tmp $@
+
+
 dist: src $(wildcard src/*) tsconfig.json
 	yarn run rollup -c
 
