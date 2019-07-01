@@ -293,3 +293,4 @@ export const useIntersectionObserver = (
     */
   options?: IntersectionObserverInit
 ) => useObserver(IntersectionObserver, options)
+
