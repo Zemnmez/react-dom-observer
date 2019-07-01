@@ -169,7 +169,7 @@ export const useObserver =
  * elements you want to track the size of.
  *
  *
- * ## example [useResizeObserver](example/src/useResizeObserver.js)
+ * #### example [useResizeObserver](example/src/useResizeObserver.js)
  *
  */
 export const useResizeObserver = (
@@ -193,7 +193,7 @@ export const useResizeObserver = (
   * [mdn: MutationRecord]: https://developer.mozilla.org/en-US/docs/Web/API/MutationRecord "MDN docs: MutationRecord"
   * [react docs: react ref]: https://reactjs.org/docs/refs-and-the-dom.html "React Docs: Refs and the DOM"
   *
-  * ## example [useMutationObserver](example/src/useMutationObserver.js)
+  * #### example [useMutationObserver](example/src/useMutationObserver.js)
   *
   * ```javascript
   * import React from 'react'
@@ -251,7 +251,7 @@ export const useMutationObserver = (
   * [mdn: IntersectionObserverEntry]: https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserverEntry "MDN docs: IntersectionObserverEntry"
   * [react docs: react ref]: https://reactjs.org/docs/refs-and-the-dom.html "React Docs: Refs and the DOM"
   *
-  * ## example [useIntersectionObserver](example/src/useIntersectionObserver.js)
+  * #### example [useIntersectionObserver](example/src/useIntersectionObserver.js)
   *
   * ```javascript
   * import React from 'react'

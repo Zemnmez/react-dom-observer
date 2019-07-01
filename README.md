@@ -59,7 +59,7 @@ export const SavedTextarea = () => {
 
 ▸ **useIntersectionObserver**(`options?`: *`IntersectionObserverInit`*): *function*
 
-*Defined in [index.tsx:288](https://github.com/Zemnmez/react-dom-observer/blob/6cb1283/src/index.tsx#L288)*
+*Defined in [index.tsx:288](https://github.com/Zemnmez/react-dom-observer/blob/c9898d4/src/index.tsx#L288)*
 
 [useIntersectionObserver](README.md#const-useintersectionobserver) is a React hook exposing the functionality of the
 [IntersectionObserver][mdn: IntersectionObserver] API, which is an efficient way to
@@ -81,7 +81,7 @@ any number to children that you want to intersect with you.
 [mdn: IntersectionObserverEntry]: https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserverEntry "MDN docs: IntersectionObserverEntry"
 [react docs: react ref]: https://reactjs.org/docs/refs-and-the-dom.html "React Docs: Refs and the DOM"
 
-## example [useIntersectionObserver](example/src/useIntersectionObserver.js)
+#### example [useIntersectionObserver](example/src/useIntersectionObserver.js)
 
 ```javascript
 import React from 'react'
@@ -138,7 +138,7 @@ ___
 
 ▸ **useMutationObserver**(`Default?`: *`MutationRecord`*, `options?`: *`MutationObserverInit`*): *[`MutationRecord` | undefined, `callbackRef`]*
 
-*Defined in [index.tsx:224](https://github.com/Zemnmez/react-dom-observer/blob/6cb1283/src/index.tsx#L224)*
+*Defined in [index.tsx:224](https://github.com/Zemnmez/react-dom-observer/blob/c9898d4/src/index.tsx#L224)*
 
 [useMutationObserver](README.md#const-usemutationobserver) is a React hook exposing the functionality of the
 [MutationObserver][mdn: MutationObserver] API, which is an efficient way to
@@ -156,7 +156,7 @@ parameter to any elements you want to track child changes for.
 [mdn: MutationRecord]: https://developer.mozilla.org/en-US/docs/Web/API/MutationRecord "MDN docs: MutationRecord"
 [react docs: react ref]: https://reactjs.org/docs/refs-and-the-dom.html "React Docs: Refs and the DOM"
 
-## example [useMutationObserver](example/src/useMutationObserver.js)
+#### example [useMutationObserver](example/src/useMutationObserver.js)
 
 ```javascript
 import React from 'react'
@@ -199,7 +199,7 @@ ___
 
 ▸ **useResizeObserver**(`Default?`: *`ResizeObserverEntry`*): *[`ResizeObserverEntry` | undefined, `callbackRef`]*
 
-*Defined in [index.tsx:175](https://github.com/Zemnmez/react-dom-observer/blob/6cb1283/src/index.tsx#L175)*
+*Defined in [index.tsx:175](https://github.com/Zemnmez/react-dom-observer/blob/c9898d4/src/index.tsx#L175)*
 
 [useResizeObserver](README.md#const-useresizeobserver) is a React hook exposing the functionality of
 the [ResizeObserver][mdn: ResizeObserver] API, which is an efficient
@@ -213,7 +213,7 @@ representing the current known size.
 2.a React ref you can pass in the `ref={}` parameter to any
 elements you want to track the size of.
 
-## example [useResizeObserver](example/src/useResizeObserver.js)
+#### example [useResizeObserver](example/src/useResizeObserver.js)
 
 **Parameters:**
 
