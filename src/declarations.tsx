@@ -1,5 +1,5 @@
 /**
- * @module react-observer-hook
+ * @module Declarations
  */
 
 /**
@@ -169,4 +169,5 @@ export declare type DOMRectReadOnly = {
     readonly y: number;
 }
  */
+
 
